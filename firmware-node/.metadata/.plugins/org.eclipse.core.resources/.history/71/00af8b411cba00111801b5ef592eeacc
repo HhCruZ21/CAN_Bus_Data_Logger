@@ -1,0 +1,35 @@
+/*
+ * i2c1_driver.c
+ *
+ *  Created on: Sep 27, 2026
+ *      Author: haizon
+ */
+
+
+#include "i2c1_driver.h"
+
+void i2c1Init()
+{
+
+}
+
+static i2c1StartTransfer(uint8_t devAddr, uint8_t nbytes, uint8_t isRead, uint8_t autoend)
+{
+
+}
+
+I2C1_Status i2c1WriteReg(uint8_t devAAddr, uint8_t regAddr, uint8_t data)
+{
+
+}
+
+I2C1_Status i2c1ReadBytes(uint8_t devAddr, uint8_t regAddr, uint8_t *buf, uint16_t len)
+{
+
+}
+
+I2C1_Status i2c1ReadReg(uint8_t devAddr, uint8_t regAddr, uint8_t *data)
+{
+	return i2c1ReadBytes(devAddr, regAddr, data, 1);
+}
+

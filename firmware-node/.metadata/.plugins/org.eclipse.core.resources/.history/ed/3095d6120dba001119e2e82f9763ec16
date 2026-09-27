@@ -1,0 +1,16 @@
+/*
+ * i2c1_driver.c
+ *
+ *  Created on: Sep 27, 2026
+ *      Author: haizon
+ */
+
+
+#include <stdint.h>
+#include "i2c1_driver.h"
+#include "bme280.h"
+
+volatile int32_t g_temp_centiC = 0;
+volatile uint32_t g_pressure_pa = 0;
+volatile uint32_t g_humidity_permille = 0;
+

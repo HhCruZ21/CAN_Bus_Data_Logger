@@ -1,0 +1,57 @@
+/*
+ * bme280.c
+ *
+ *  Created on: Sep 27, 2026
+ *      Author: haizon
+ */
+
+
+
+#include "bme280.h"
+#include "i2c1_driver.h"
+
+// BME280 Register map, from datasheet section 5.3
+#define BME280_REG_CHIP_ID	0xD0U	// "id" register
+#define BME280_REG_RESET	0xE0U	// "reset" register
+#define BME280_REG_CTRL_HUM 0xF2U	// "ctrl_hum" register-Humidity oversampling setting
+
+/*
+ * "status" register - Has 2 bits
+ *
+ * Bit 3- named measuring[0] Automatically set to '1' when a conversion is running
+ * 							 Back to '0' when the results have been transferred to data registers
+ *
+ * Bit 0- name im_update[0] Automatically set to '1' when the NVM data are being copied to image registers
+ * 							Back to '0' when copying is done
+ *
+ * 							The data is copied at power-on-reset and before every conversion
+ */
+#define BME280_REG_STATUS	0xF3U
+
+/**
+ * Sets the pressure and data acquisition options of the device. Write only after changing "ctrl_hum"
+ * for changes to become effective.
+ *
+ * 8 bit register, bits 7,6,5 handle temperature, bits 4,3,2 handles pressure, bits 1,0 controls
+ * sensor mode of the device
+ *
+ * mode[1:0], 00 for sleep mode, 01 and 10 for forced mode, 11 for normal mode
+ * Temperature oversampling
+ * osrs_t[2:0], 000 is for skipped oversampling,
+ * 				001 is oversampling x 1
+ * 				010 is oversampling x 2
+ * 				011 is oversampling x 4
+ * 				100 is oversampling x 8
+ * 				101, others is oversampling x 16
+ *
+ * Pressure oversampling osrs_t[2:0], same value set as temperature oversampling
+ */
+#define BME280_REG_CTRL_MEAS 0xF4U
+
+/**
+ * The
+ */
+#define BME280_REG_CONFIG 0xF5U
+static BME280_CalibData s_calib;
+
+
